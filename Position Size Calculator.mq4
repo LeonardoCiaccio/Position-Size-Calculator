@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                     Position Size Calculator.mq4 |
-//|                        Copyright © 2015 - 2016, Leonardo Ciaccio |
+//|                        Copyright Â© 2015 - 2016, Leonardo Ciaccio |
 //|      https://github.com/LeonardoCiaccio/Position-Size-Calculator |
 //|                                                                  |
 //|             Donate Bitcoins : 1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B |
@@ -23,7 +23,7 @@ enum __position{
 
 };
 
-#property copyright "Copyright © 2015-2016, Leonardo Ciaccio"
+#property copyright "Copyright Â© 2015-2016, Leonardo Ciaccio"
 #property link      "https://github.com/LeonardoCiaccio/Position-Size-Calculator"
 #property indicator_chart_window
 
@@ -31,7 +31,7 @@ extern string  Info            = "[ App Info ]";
 extern string  Name            = "Position Size Calculator";
 extern string  Version         = "v.1.0.1";
 extern string  Contact         = "leonardo.ciaccio@gmail.com";
-extern string  Web             = "https://github.com/LeonardoCiaccio/SVEA";
+extern string  Web             = "https://github.com/LeonardoCiaccio/Position-Size-Calculator";
 extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";
 extern string  Donate_PayPal   = "microlabs@altervista.org";
 
