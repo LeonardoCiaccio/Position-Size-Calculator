@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                     Position Size Calculator.mq4 |
-//|                        Copyright Â© 2015 - 2016, Leonardo Ciaccio |
+//|                        Copyright © 2015 - 2016, Leonardo Ciaccio |
 //|      https://github.com/LeonardoCiaccio/Position-Size-Calculator |
 //|                                                                  |
 //|             Donate Bitcoins : 1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B |
@@ -23,7 +23,7 @@ enum __position{
 
 };
 
-#property copyright "Copyright Â© 2015-2016, Leonardo Ciaccio"
+#property copyright "Copyright © 2015-2016, Leonardo Ciaccio"
 #property link      "https://github.com/LeonardoCiaccio/Position-Size-Calculator"
 #property indicator_chart_window
 
@@ -36,7 +36,7 @@ extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";
 extern string  Donate_PayPal   = "microlabs@altervista.org";
 
 extern string  Setup           = "[ App Setup ]";
-extern __money AccountMoney    = FreeMargin;
+extern __money AccountMoney    = Balance;
 extern double StopLossPips     = 30;
 extern double Risk             = 5;
 
@@ -84,8 +84,9 @@ int deinit(){
 //+------------------------------------------------------------------+
 int start(){
 
-   create_box();
+   create_box();   
    return( 0 );
+   
 }
 
 //+------------------------------------------------------------------+
@@ -112,7 +113,7 @@ double current_spread(){
 //+------------------------------------------------------------------+
 //| Create a box information                                         |
 //+------------------------------------------------------------------+
-void create_box(){
+int create_box(){
    
    string txtBG = "g";
    string aName = "Account";
@@ -145,6 +146,10 @@ void create_box(){
    double riskMoney = ( size / 100 ) * Risk;
    double unitCost = MarketInfo( Symbol(), MODE_TICKVALUE );
    double tickSize = MarketInfo( Symbol(), MODE_TICKSIZE );
+   
+   // Important for startup MT4, without generate an error
+   if( unitCost == 0 )return( 0 );
+   
    double positionSize = riskMoney / ( ( ( NormalizeDouble( StopLossPips * MyPoint, Digits ) ) * unitCost ) / tickSize );
    
    
@@ -217,6 +222,8 @@ void create_box(){
    ObjectSet( "Profit", OBJPROP_YDISTANCE, Distance_Y * 13 );
    ObjectSetText( "Profit", "Profit : " + DoubleToStr( total_profit(), 2 ) , Font_Size, Font_Face, Color_Profit);
    
+   return( 0 );
+      
 }
 
 //+------------------------------------------------------------------+
@@ -247,14 +254,16 @@ double total_profit(){
    
    for( int x = 0; x < OrdersTotal(); x++ ){
    
-       OrderSelect( x, SELECT_BY_POS, MODE_TRADES );
+       if( OrderSelect( x, SELECT_BY_POS, MODE_TRADES ) ){
        
-       if( OrderSymbol() == MySymbol ){
+         if( OrderSymbol() == MySymbol ){
        
-         tt_profit += OrderProfit();
+            tt_profit += OrderProfit();
+          
+          }
        
        }
-   
+          
    }
    
    return(tt_profit);
