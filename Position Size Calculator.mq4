@@ -156,6 +156,8 @@ int create_box(){
    
    string myMode = ( Mode == Percentage ) ? "Percentage" : "Money";
    double riskMoney = ( Mode == Percentage ) ? ( size / 100 ) * RiskPercentage : RiskMoney;
+   double riskPercentage = ( Mode == Percentage ) ? RiskPercentage : RiskMoney / ( size / 100 );
+   
    double unitCost = MarketInfo( Symbol(), MODE_TICKVALUE );
    double tickSize = MarketInfo( Symbol(), MODE_TICKSIZE );
    
@@ -208,7 +210,7 @@ int create_box(){
    ObjectSet( "Risk", OBJPROP_CORNER, Position );
    ObjectSet( "Risk", OBJPROP_XDISTANCE, Distance_X);
    ObjectSet( "Risk", OBJPROP_YDISTANCE, Distance_Y * 7 );
-   ObjectSetText( "Risk", "Risk : " + DoubleToStr( RiskPercentage, 2 ) + " %" , Font_Size, Font_Face, Font_Color);
+   ObjectSetText( "Risk", "Risk : " + DoubleToStr( riskPercentage, 2 ) + " %" , Font_Size, Font_Face, Font_Color);
    
    ObjectCreate("RiskM", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "RiskM", OBJPROP_CORNER, Position );
