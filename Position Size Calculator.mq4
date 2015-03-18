@@ -17,9 +17,18 @@ enum __money{
 };
 
 enum __position{
+   
+   TopLeft = 0,
+   TopRight = 1,
+   BottomLeft = 2,
+   BottomRight = 3
 
-   Top = 1,
-   Bottom = 3
+};
+
+enum __mode{
+
+   Percentage = 1,
+   Money = 2
 
 };
 
@@ -29,7 +38,7 @@ enum __position{
 
 extern string  Info            = "[ App Info ]";
 extern string  Name            = "Position Size Calculator";
-extern string  Version         = "v.1.0.2";
+extern string  Version         = "v.1.0.3";
 extern string  Contact         = "leonardo.ciaccio@gmail.com";
 extern string  Web             = "https://github.com/LeonardoCiaccio/Position-Size-Calculator";
 extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";
@@ -37,8 +46,10 @@ extern string  Donate_PayPal   = "microlabs@altervista.org";
 
 extern string  Setup           = "[ App Setup ]";
 extern __money AccountMoney    = Balance;
+extern __mode Mode             = Percentage;
 extern double StopLossPips     = 30;
-extern double Risk             = 5;
+extern double RiskPercentage   = 5;
+extern double RiskMoney        = 25;
 
 extern string  Box             = "[ App Box ]";
 extern color Color_BackGround  = Black;
@@ -48,10 +59,10 @@ extern color Color_Tick        = Orange;
 extern color Font_Color        = LightBlue;
 extern int Font_Size           = 12;
 extern string Font_Face        = "Courier";
-extern __position Position      = Top;
-extern int Distance_X          = 17;
+extern __position Position     = BottomLeft;
+extern int Distance_X          = 25;
 extern int Distance_Y          = 15;
-extern int BackGround_Size     = 165;
+extern int BackGround_Size     = 180;
 
 double MyPoint = 0.0;
 string MySymbol = "";
@@ -143,7 +154,8 @@ int create_box(){
    }
    bName = DoubleToStr( size, 2 );
    
-   double riskMoney = ( size / 100 ) * Risk;
+   string myMode = ( Mode == Percentage ) ? "Percentage" : "Money";
+   double riskMoney = ( Mode == Percentage ) ? ( size / 100 ) * RiskPercentage : RiskMoney;
    double unitCost = MarketInfo( Symbol(), MODE_TICKVALUE );
    double tickSize = MarketInfo( Symbol(), MODE_TICKSIZE );
    
@@ -180,46 +192,52 @@ int create_box(){
    ObjectSet( "AccountSize", OBJPROP_YDISTANCE, Distance_Y * 4 );   
    ObjectSetText( "AccountSize", aName + " : " + bName, Font_Size, Font_Face, Font_Color);
    
+   ObjectCreate("Mode", OBJ_LABEL, 0, 0, 0);
+   ObjectSet( "Mode", OBJPROP_CORNER, Position );
+   ObjectSet( "Mode", OBJPROP_XDISTANCE, Distance_X);
+   ObjectSet( "Mode", OBJPROP_YDISTANCE, Distance_Y * 5 );   
+   ObjectSetText( "Mode", "Mode : " + myMode, Font_Size, Font_Face, Color_Tick);
+   
    ObjectCreate("StopLoss", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "StopLoss", OBJPROP_CORNER, Position );
    ObjectSet( "StopLoss", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "StopLoss", OBJPROP_YDISTANCE, Distance_Y * 5 );
+   ObjectSet( "StopLoss", OBJPROP_YDISTANCE, Distance_Y * 6 );
    ObjectSetText( "StopLoss", "Stop Loss : " + StopLossPips , Font_Size, Font_Face, Font_Color);
       
    ObjectCreate("Risk", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "Risk", OBJPROP_CORNER, Position );
    ObjectSet( "Risk", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "Risk", OBJPROP_YDISTANCE, Distance_Y * 6 );
-   ObjectSetText( "Risk", "Risk : " + DoubleToStr( Risk, 2 ) + " %" , Font_Size, Font_Face, Font_Color);
+   ObjectSet( "Risk", OBJPROP_YDISTANCE, Distance_Y * 7 );
+   ObjectSetText( "Risk", "Risk : " + DoubleToStr( RiskPercentage, 2 ) + " %" , Font_Size, Font_Face, Font_Color);
    
    ObjectCreate("RiskM", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "RiskM", OBJPROP_CORNER, Position );
    ObjectSet( "RiskM", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "RiskM", OBJPROP_YDISTANCE, Distance_Y * 7 );
+   ObjectSet( "RiskM", OBJPROP_YDISTANCE, Distance_Y * 8 );
    ObjectSetText( "RiskM", "Money : " + DoubleToStr( riskMoney, 2 ) , Font_Size, Font_Face, Font_Color); 
      
    ObjectCreate("TickValue", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "TickValue", OBJPROP_CORNER, Position );
    ObjectSet( "TickValue", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "TickValue", OBJPROP_YDISTANCE, Distance_Y * 9 );
+   ObjectSet( "TickValue", OBJPROP_YDISTANCE, Distance_Y * 10 );
    ObjectSetText( "TickValue", "Tick Value : " + DoubleToStr( unitCost, 3 ) , Font_Size, Font_Face, Color_Tick );
    
    ObjectCreate("TickSize", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "TickSize", OBJPROP_CORNER, Position );
    ObjectSet( "TickSize", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "TickSize", OBJPROP_YDISTANCE, Distance_Y * 10 );
+   ObjectSet( "TickSize", OBJPROP_YDISTANCE, Distance_Y * 11 );
    ObjectSetText( "TickSize", "Tick Size : " + DoubleToStr( tickSize, 3 ) , Font_Size, Font_Face, Color_Tick);
    
    ObjectCreate("PositionSize", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "PositionSize", OBJPROP_CORNER, Position );
    ObjectSet( "PositionSize", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "PositionSize", OBJPROP_YDISTANCE, Distance_Y * 11 );
+   ObjectSet( "PositionSize", OBJPROP_YDISTANCE, Distance_Y * 12 );
    ObjectSetText( "PositionSize", "LOTS : " + DoubleToStr( positionSize, 3 ) , Font_Size, Font_Face, Color_Lots);
    
    ObjectCreate("Profit", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "Profit", OBJPROP_CORNER, Position );
    ObjectSet( "Profit", OBJPROP_XDISTANCE, Distance_X);
-   ObjectSet( "Profit", OBJPROP_YDISTANCE, Distance_Y * 13 );
+   ObjectSet( "Profit", OBJPROP_YDISTANCE, Distance_Y * 14 );
    ObjectSetText( "Profit", "Profit : " + DoubleToStr( total_profit(), 2 ) , Font_Size, Font_Face, Color_Profit);
    
    return( 0 );
@@ -242,6 +260,7 @@ void remove_box(){
    ObjectDelete( "TickSize" );
    ObjectDelete( "Profit" );
    ObjectDelete( "BoxBackground" );
+   ObjectDelete( "Mode" );
    
 }
 
