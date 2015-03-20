@@ -1,13 +1,13 @@
 //+------------------------------------------------------------------+
 //|                                     Position Size Calculator.mq4 |
-//|                        Copyright © 2015 - 2016, Leonardo Ciaccio |
+//|                        Copyright Â© 2015 - 2016, Leonardo Ciaccio |
 //|      https://github.com/LeonardoCiaccio/Position-Size-Calculator |
 //|                                                                  |
 //|             Donate Bitcoins : 1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B |
 //|             Donate PayPal   : microlabs@altervista.org           |
 //+------------------------------------------------------------------+
 
-#property copyright "Copyright © 2015-2016, Leonardo Ciaccio"
+#property copyright "Copyright Â© 2015-2016, Leonardo Ciaccio"
 #property link      "https://github.com/LeonardoCiaccio/Position-Size-Calculator"
 #property indicator_chart_window
 #property description "Calculate the value of size in real-time with mode Money and Percentage."
@@ -54,7 +54,7 @@ extern double StopLossPips     = 30;         // Stop Loss In Pips
 extern double RiskPercentage   = 5;          // Risk In Percentage
 extern double RiskMoney        = 25;         // Risk In Money
 
-extern string  Box             = "--------------------------------------------------------";         // ------- SETUP BX STYLE
+extern string  Box             = "--------------------------------------------------------";         // ------- SETUP BOX STYLE
 extern color Color_BackGround  = Black;      // Color Of Background Box
 extern color Color_Lots        = Red;        // Color Of Size
 extern color Color_Profit      = LightBlue;  // Color Of Profit
