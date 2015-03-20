@@ -1,16 +1,21 @@
 //+------------------------------------------------------------------+
 //|                                     Position Size Calculator.mq4 |
-//|                        Copyright Â© 2015 - 2016, Leonardo Ciaccio |
+//|                        Copyright © 2015 - 2016, Leonardo Ciaccio |
 //|      https://github.com/LeonardoCiaccio/Position-Size-Calculator |
 //|                                                                  |
 //|             Donate Bitcoins : 1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B |
 //|             Donate PayPal   : microlabs@altervista.org           |
 //+------------------------------------------------------------------+
 
+#property copyright "Copyright © 2015-2016, Leonardo Ciaccio"
+#property link      "https://github.com/LeonardoCiaccio/Position-Size-Calculator"
+#property indicator_chart_window
+#property description "Calculate the value of size in real-time with mode Money and Percentage."
+#property strict // Extern/Input box trick ;) - http://docs.mql4.com/basis/preprosessor/compilation
 
 enum __money{ 
 
-   FreeMargin,
+   FreeMargin, //Free Margin
    Balance,
    Equity 
 
@@ -18,10 +23,10 @@ enum __money{
 
 enum __position{
    
-   TopLeft = 0,
-   TopRight = 1,
-   BottomLeft = 2,
-   BottomRight = 3
+   TopLeft = 0,      // Top Left
+   TopRight = 1,     // Top Right
+   BottomLeft = 2,   // Bottom Left
+   BottomRight = 3   // Bottom Right
 
 };
 
@@ -32,37 +37,35 @@ enum __mode{
 
 };
 
-#property copyright "Copyright Â© 2015-2016, Leonardo Ciaccio"
-#property link      "https://github.com/LeonardoCiaccio/Position-Size-Calculator"
-#property indicator_chart_window
 
-extern string  Info            = "[ App Info ]";
+
+extern string  Info            = "--------------------------------------------------------";         // ------- INDICATOR INFORMATION
 extern string  Name            = "Position Size Calculator";
-extern string  Version         = "v.1.0.3";
+extern string  Version         = "v.1.0.4";
 extern string  Contact         = "leonardo.ciaccio@gmail.com";
 extern string  Web             = "https://github.com/LeonardoCiaccio/Position-Size-Calculator";
-extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";
-extern string  Donate_PayPal   = "microlabs@altervista.org";
+extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";  // Donate Bitcoins
+extern string  Donate_PayPal   = "microlabs@altervista.org";            // Donate PayPal
 
-extern string  Setup           = "[ App Setup ]";
-extern __money AccountMoney    = Balance;
-extern __mode Mode             = Percentage;
-extern double StopLossPips     = 30;
-extern double RiskPercentage   = 5;
-extern double RiskMoney        = 25;
+extern string  Setup           = "--------------------------------------------------------";         // ------- SETUP INDICATOR
+extern __money AccountMoney    = Balance;    // Money For The Calculation
+extern __mode Mode             = Percentage; // Mode For The Calculation
+extern double StopLossPips     = 30;         // Stop Loss In Pips
+extern double RiskPercentage   = 5;          // Risk In Percentage
+extern double RiskMoney        = 25;         // Risk In Money
 
-extern string  Box             = "[ App Box ]";
-extern color Color_BackGround  = Black;
-extern color Color_Lots        = Red;
-extern color Color_Profit      = LightBlue;
-extern color Color_Tick        = Orange;  
-extern color Font_Color        = LightBlue;
-extern int Font_Size           = 12;
-extern string Font_Face        = "Courier";
+extern string  Box             = "--------------------------------------------------------";         // ------- SETUP BX STYLE
+extern color Color_BackGround  = Black;      // Color Of Background Box
+extern color Color_Lots        = Red;        // Color Of Size
+extern color Color_Profit      = LightBlue;  // Color Of Profit
+extern color Color_Tick        = Orange;     // Color Of Ticks
+extern color Font_Color        = LightBlue;  // Color Of Common Fonts
+extern int Font_Size           = 12;         // Font Size
+extern string Font_Face        = "Courier";  // Font Face
 extern __position Position     = BottomLeft;
-extern int Distance_X          = 25;
-extern int Distance_Y          = 15;
-extern int BackGround_Size     = 180;
+extern int Distance_X          = 25;         // Distance Of Box Horizontal
+extern int Distance_Y          = 15;         // Distance Of Box Vertical
+extern int BackGround_Size     = 180;        // Size Of Box ( ignore it )
 
 double MyPoint = 0.0;
 string MySymbol = "";
