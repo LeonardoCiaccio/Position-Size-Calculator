@@ -41,7 +41,7 @@ enum __mode{
 
 extern string  Info            = "--------------------------------------------------------";         // ------- INDICATOR INFORMATION
 extern string  Name            = "Position Size Calculator";
-extern string  Version         = "v.1.0.4";
+extern string  Version         = "v.1.0.5";
 extern string  Contact         = "leonardo.ciaccio@gmail.com";
 extern string  Web             = "https://github.com/LeonardoCiaccio/Position-Size-Calculator";
 extern string  Donate_Bitcoins = "1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B";  // Donate Bitcoins
@@ -165,9 +165,8 @@ int create_box(){
    double tickSize = MarketInfo( Symbol(), MODE_TICKSIZE );
    
    // Important for startup MT4, without generate an error
-   if( unitCost == 0 )return( 0 );
-   
-   double positionSize = riskMoney / ( ( ( NormalizeDouble( StopLossPips * MyPoint, Digits ) ) * unitCost ) / tickSize );
+   //if( unitCost == 0 )return( 0 );   
+   double positionSize = ( unitCost > 0 ) ? riskMoney / ( ( ( NormalizeDouble( StopLossPips * MyPoint, Digits ) ) * unitCost ) / tickSize ) : 0 ;
    
    
    // Background
@@ -207,7 +206,7 @@ int create_box(){
    ObjectSet( "StopLoss", OBJPROP_CORNER, Position );
    ObjectSet( "StopLoss", OBJPROP_XDISTANCE, Distance_X);
    ObjectSet( "StopLoss", OBJPROP_YDISTANCE, Distance_Y * 6 );
-   ObjectSetText( "StopLoss", "Stop Loss : " + StopLossPips , Font_Size, Font_Face, Font_Color);
+   ObjectSetText( "StopLoss", "Stop Loss : " + DoubleToStr( StopLossPips, 2 ) , Font_Size, Font_Face, Font_Color);
       
    ObjectCreate("Risk", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "Risk", OBJPROP_CORNER, Position );
@@ -233,11 +232,12 @@ int create_box(){
    ObjectSet( "TickSize", OBJPROP_YDISTANCE, Distance_Y * 11 );
    ObjectSetText( "TickSize", "Tick Size : " + DoubleToStr( tickSize, 3 ) , Font_Size, Font_Face, Color_Tick);
    
+   string pSize = ( positionSize > 0 ) ? DoubleToStr( positionSize, 3 ) : "loading ..." ;
    ObjectCreate("PositionSize", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "PositionSize", OBJPROP_CORNER, Position );
    ObjectSet( "PositionSize", OBJPROP_XDISTANCE, Distance_X);
    ObjectSet( "PositionSize", OBJPROP_YDISTANCE, Distance_Y * 12 );
-   ObjectSetText( "PositionSize", "LOTS : " + DoubleToStr( positionSize, 3 ) , Font_Size, Font_Face, Color_Lots);
+   ObjectSetText( "PositionSize", "LOTS : " + pSize , Font_Size, Font_Face, Color_Lots);
    
    ObjectCreate("Profit", OBJ_LABEL, 0, 0, 0);
    ObjectSet( "Profit", OBJPROP_CORNER, Position );
