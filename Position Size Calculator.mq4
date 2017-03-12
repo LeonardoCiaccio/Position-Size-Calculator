@@ -1,9 +1,8 @@
 //+------------------------------------------------------------------+
 //|                                     Position Size Calculator.mq4 |
-//|                        Copyright © 2015 - 2016, Leonardo Ciaccio |
+//|                        Copyright © 2015 - 2017, Leonardo Ciaccio |
 //|      https://github.com/LeonardoCiaccio/Position-Size-Calculator |
 //|                                                                  |
-//|             Donate Bitcoins : 1KHSR2S58y8WV6o3zRYeD5fBApvfTMtj8B |
 //|             Donate PayPal   : microlabs@altervista.org           |
 //+------------------------------------------------------------------+
 
@@ -55,14 +54,14 @@ extern double RiskPercentage   = 5;          // Risk In Percentage
 extern double RiskMoney        = 25;         // Risk In Money
 
 extern string  Box             = "--------------------------------------------------------";         // ------- SETUP BOX STYLE
-extern color Color_BackGround  = Black;      // Color Of Background Box
+extern color Color_BackGround  = clrNONE;    // Color Of Background Box
 extern color Color_Lots        = Red;        // Color Of Size
 extern color Color_Profit      = LightBlue;  // Color Of Profit
 extern color Color_Tick        = Orange;     // Color Of Ticks
 extern color Font_Color        = LightBlue;  // Color Of Common Fonts
 extern int Font_Size           = 12;         // Font Size
-extern string Font_Face        = "Courier";  // Font Face
-extern __position Position     = BottomLeft;
+extern string Font_Face        = "Impact";   // Font Face
+extern __position Position     = TopRight;   // Position
 extern int Distance_X          = 25;         // Distance Of Box Horizontal
 extern int Distance_Y          = 15;         // Distance Of Box Vertical
 extern int BackGround_Size     = 180;        // Size Of Box ( ignore it )
